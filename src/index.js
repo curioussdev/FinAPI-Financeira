@@ -40,6 +40,10 @@ const costomers = []
 
         const costomer = costomers.find(costomer => costomer.cpf === cpf);
 
+        if(!costomer){
+            return response.status(400).json({error: "Customer not found!"})
+        }
+
         return response.json(costomer.statement);
     });
 
