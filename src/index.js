@@ -35,8 +35,8 @@ const costomers = []
     return response.status(201).send()
     });
 
-    app.get("/statement/:cpf", (request, response)=>{
-        const { cpf } = request.params;
+    app.get("/statement", (request, response)=>{
+        const { cpf } = request.headers;
 
         const costomer = costomers.find(costomer => costomer.cpf === cpf);
 
