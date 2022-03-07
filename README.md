@@ -4,7 +4,7 @@
 
 ### Requisitos
 
-- [] Deve ser possível criar uma conta
+- [x] Deve ser possível criar uma conta
 - [] Deve ser possível buscar o extrato bancário do cliente
 - [] deve ser possível realizar um depósito
 - [] Deve se possível realizar um saque
