@@ -14,7 +14,18 @@ const costomers = []
 
 app.post("/account", (request, response)=>{
     const { cpf, name} = request.body;
+
+    const costomerAlreadyExits = costomers.some(
+        (costomers) => costomers.cpf === cpf // Percorre e compara o cpf e verifica se existe um igual. Se não existir um cpf, vai permitir o cadastro de uma nova conta
+    );
+
+    if(costomerAlreadyExits){ // caso ouver um cpf igual a um já cadastrado, retorna error
+        return response.status(400).json({error: "Costomer Already Exists!"})
+    }
+
+
     const id = uuidv4();
+
 
     costomers.push({
         cpf,
