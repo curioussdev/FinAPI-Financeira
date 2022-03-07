@@ -1,0 +1,15 @@
+//Localhost:3000
+/**
+ * GET - Buscar Informação dentro do Servidor
+ * POST - Inserir uma Informação no Servidor
+ * PUT - Alterar uma Informação no Servidor
+ * DELETE - Deletar uma Informação no Servidor
+ * PATCH - Alterar uma Informação Específica
+ */
+
+
+Tipos de Parâmetros
+
+- Route Params => como um id: identificar um recurso editar/deletar/buscar
+- Query Params => Paginação / Filtro
+- Body Params => Os objectos para Inserção/Alteração de algum recurso (JSON)
