@@ -5,12 +5,24 @@ const app = express();
 app.use(express.json())
 
 const costomers = []
-/**
- * cpf - string
- * name - string
- * id - uuid
- * statement - []
- */
+
+
+ //Middlewers
+ function verifyIfExistsAccountCPF(request, response, next){
+    const { cpf } = request.headers;
+
+    const costomer = costomers.find(costomer => costomer.cpf === cpf);
+
+        if(!costomer){
+            return response.status(400).json({error: "Customer not found!"})
+        };
+    
+    request.costomer = costomer;
+
+    return next();
+ }
+
+
 
     app.post("/account", (request, response)=>{ //Cadastrar User
         const { cpf, name} = request.body;
@@ -35,14 +47,9 @@ const costomers = []
     return response.status(201).send()
     });
 
-    app.get("/statement", (request, response)=>{
-        const { cpf } = request.headers;
-
-        const costomer = costomers.find(costomer => costomer.cpf === cpf);
-
-        if(!costomer){
-            return response.status(400).json({error: "Customer not found!"})
-        }
+    app.get("/statement", verifyIfExistsAccountCPF, (request, response)=>{
+        
+        const { costomer } = request;        
 
         return response.json(costomer.statement);
     });
