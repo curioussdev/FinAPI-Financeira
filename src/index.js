@@ -6,8 +6,7 @@ app.use(express.json())
 
 const costomers = []
 
-
- //Middlewers
+ //Middlewer
  function verifyIfExistsAccountCPF(request, response, next){
     const { cpf } = request.headers;
 
@@ -21,7 +20,6 @@ const costomers = []
 
     return next();
  }
-
 
 
     app.post("/account", (request, response)=>{ //Cadastrar User
@@ -54,6 +52,9 @@ const costomers = []
         return response.json(costomer.statement);
     });
 
+    app.post("/deposit", verifyIfExistsAccountCPF, (request, response) =>{
+        
+    }) 
 
 
 app.listen(3000);
