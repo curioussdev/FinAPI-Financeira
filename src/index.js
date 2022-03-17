@@ -70,7 +70,12 @@ const costomers = []
         costomer.statement.push(statementOperation) // envia o statementOperation para o costomer
 
         return response.status(201).send()
-    }) 
+    });
+
+    app.post("/withdraw", verifyIfExistsAccountCPF, (request, response) =>{
+        const { amount } = request.body; // buscando a quantia que se quer fazer saque
+        
+    })
 
 
 app.listen(3000);
