@@ -53,7 +53,23 @@ const costomers = []
     });
 
     app.post("/deposit", verifyIfExistsAccountCPF, (request, response) =>{
-        
+        const { description, amount } = request.body;
+
+        // passar as informações de depósito para dentro do costumer "statement"
+        // inserir a informação de depósito dentro do statemant do user
+
+        const { costomer } = request; 
+
+        const statementOperation = {
+            description,
+            amount,
+            created_at: new Date(),
+            type: "credit"
+        }
+
+        costomer.statement.push(statementOperation) // envia o statementOperation para o costomer
+
+        return response.status(201).send()
     }) 
 
 

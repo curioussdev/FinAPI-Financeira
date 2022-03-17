@@ -6,7 +6,7 @@
 
 - [x] Deve ser possível criar uma conta
 - [x] Deve ser possível buscar o extrato bancário do cliente
-- [] deve ser possível realizar um depósito
+- [x] deve ser possível realizar um depósito
 - [] Deve se possível realizar um saque
 - [] Deve se possível buscra o extrato bancário do cliente por data
 - [] Deve se possível actualizar dados da conta do cliente
@@ -19,7 +19,7 @@
 
 - [x] Não deve se possível cadastrar uma conta com CPF já existente
 - [x] Não deve se possível fazer depósito em uma conta não existente
-- [] Não deve se possível buscar extrato em uma conta não existente
+- [x] Não deve se possível buscar extrato em uma conta não existente
 - [] Não deve se possível fazer saque em uma conta não existente
 - [] Não deve se possível excluir uma conta não existente
 - [] Não deve se possível fazer saque quando o saldo for insuficiente 
