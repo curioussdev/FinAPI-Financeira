@@ -28,5 +28,13 @@ const customers = [];
      return response.status(201).send({message: "Customer Created!"})
  })
 
+ app.get("/statement/:cpf", (request, response)=>{
+    const { cpf } = request.params; // buscar o cpf usando o destructing
+
+    const customer = customers.find(
+        (customer) => customer.cpf === cpf) //procura algum customer igual ao cpf que foi passado 
+        
+        return response.json(customer.statement)
+ })
 
 app.listen(3000);
