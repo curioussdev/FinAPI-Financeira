@@ -2,80 +2,31 @@ const express = require('express');
 const { v4: uuidv4 }  = require("uuid") // o v4, gera IDs aleatórios
 
 const app = express();
-app.use(express.json())
+app.use(express.json()) //middleware
 
-const costomers = []
+const customers = [];
 
  //Middlewer
- function verifyIfExistsAccountCPF(request, response, next){
-    const { cpf } = request.headers;
 
-    const costomer = costomers.find(costomer => costomer.cpf === cpf);
+ app.post("/account", (request, response)=>{
+     const { cpf, name } = request.body;
 
-        if(!costomer){
-            return response.status(400).json({error: "Customer not found!"})
-        };
-    
-    request.costomer = costomer;
+     const customerAlreadyExists = customers.some( // verificando se existe user com o mesmo cpf
+         (customer) => customer.cpf === cpf
+     );
+     if(customerAlreadyExists){
+         return response.status(400).json({error: "Customer Already Exists!"})
+     }
 
-    return next();
- }
+     customers.push({
+         cpf,
+         name,
+         id: uuidv4(),
+         statement: []
+     });
 
-
-    app.post("/account", (request, response)=>{ //Cadastrar User
-        const { cpf, name} = request.body;
-
-        const costomerAlreadyExits = costomers.some(
-            (costomers) => costomers.cpf === cpf // Percorre e compara o cpf e verifica se existe um igual. Se não existir um cpf, vai permitir o cadastro de uma nova conta
-        );
-
-        if(costomerAlreadyExits){ // caso ouver um cpf igual a um já cadastrado, retorna error
-            return response.status(400).json({error: "Costomer Already Exists!"})
-        }
-
-        costomers.push({
-            cpf,
-            name,
-            id: uuidv4(),
-            statement: [
-                
-            ]
-        })
-
-    return response.status(201).send()
-    });
-
-    app.get("/statement", verifyIfExistsAccountCPF, (request, response)=>{
-        
-        const { costomer } = request;        
-
-        return response.json(costomer.statement);
-    });
-
-    app.post("/deposit", verifyIfExistsAccountCPF, (request, response) =>{
-        const { description, amount } = request.body;
-
-        // passar as informações de depósito para dentro do costumer "statement"
-        // inserir a informação de depósito dentro do statemant do user
-
-        const { costomer } = request; 
-
-        const statementOperation = {
-            description,
-            amount,
-            created_at: new Date(),
-            type: "credit"
-        }
-
-        costomer.statement.push(statementOperation) // envia o statementOperation para o costomer
-
-        return response.status(201).send()
-    });
-
-    app.post("/withdraw", verifyIfExistsAccountCPF, (request, response) =>{
-        const { amount } = request.body; // buscando a quantia que se quer fazer saque
-        
-    })
+     return response.status(201).send({message: "Customer Created!"})
+ })
 
 
 app.listen(3000);
