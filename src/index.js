@@ -18,6 +18,8 @@ const customers = [];
             return response.status(400).json({error: "Customer not found!"})
         }
 
+    request.customer = customer;
+
     return next()
  }
 
@@ -43,6 +45,7 @@ const customers = [];
 
  app.get("/statement", verifyIfExistsAccountCPF, (request, response)=>{
     
+    const { customer } = request;
     return response.json(customer.statement)
  })
 
