@@ -23,6 +23,18 @@ const customers = [];
     return next();
  }
 
+ function getBalance(statement){
+    const balance = statement.reduce((acc, operation)=>{ //acc é a variável responsável por ir armazenando ou removendo de dentro od obj
+        if(operation.type === 'credit'){
+            return acc + operation.amount;
+        }else{
+            acc - operation.amount;
+        }
+
+    }, 0);
+    return balance;
+ }
+
  app.post("/account", (request, response)=>{
      const { cpf, name } = request.body;
 
@@ -43,7 +55,7 @@ const customers = [];
 
      return response.status(201).send({message: "Customer Created!"})
  })
-
+ 
  app.get("/statement", verifyIfExistsAccountCPF, (request, response)=>{
     
     const { customer } = request; // reqcuperando o request com as informações inseridas
@@ -66,5 +78,10 @@ const customers = [];
 
     return response.status(201).send({message: "Depósito realizado com sucesso!"});
  });
+
+ app.post("/withdraw", verifyIfExistsAccountCPF, (request, response)=>{
+    const { amount } = request.body // recebendo a quantia que a gente quer fazer o saque 
+    const { customer } = request;
+ })
 
 app.listen(3000);
