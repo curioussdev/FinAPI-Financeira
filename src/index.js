@@ -82,6 +82,23 @@ const customers = [];
  app.post("/withdraw", verifyIfExistsAccountCPF, (request, response)=>{
     const { amount } = request.body // recebendo a quantia que a gente quer fazer o saque 
     const { customer } = request;
+
+    const balance = getBalance(customer.statement); // faz o balanço od estrato do customer
+
+    if(balance < amount){
+        return response.status(400).json({error: "insufficiente funds"})
+    };
+
+    const statementOperation = {
+        amount,
+        created_at: new Date(),
+        type: "debit"
+    };
+
+    customer.statement.push(statementOperation) // adicionando a statementOperation no statement do customer
+
+    return response.status(201).send({message: "Saque realizado com sucesso"})
  })
 
 app.listen(3000);
+ 
