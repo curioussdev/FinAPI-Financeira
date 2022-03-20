@@ -98,7 +98,21 @@ const customers = [];
     customer.statement.push(statementOperation) // adicionando a statementOperation no statement do customer
 
     return response.status(201).send({message: "Saque realizado com sucesso"})
- })
+ });
+
+ app.get("/statement/date", verifyIfExistsAccountCPF, (request, response)=>{
+    
+    const { customer } = request; // reqcuperando do request com as informações inseridas
+    const { date } = request.query;
+    const dateFormat = new Date(date + " 00:00");
+
+    // 19/10/2022 transforma a data do date em data organizada
+    const statement = customer.statement.filter(
+        (statement)=>statement.created_at.toDateString() === 
+        new Date(dateFormat).toDateString());
+
+    return response.json(statement)
+ });
 
 app.listen(3000);
  
