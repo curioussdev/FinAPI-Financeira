@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const { v4: uuidv4 }  = require("uuid"); // o v4, gera IDs aleatórios
 
@@ -113,6 +114,14 @@ const customers = [];
 
     return response.json(statement)
  });
+
+ app.put("/account", verifyIfExistsAccountCPF, (request, response)=>{
+     const { name } = request.body;
+     const { customer } = request;
+
+     customer.name = name;
+     return response.status(201).send({message: "Customer Updated!"})
+ })
 
 app.listen(3000);
  
